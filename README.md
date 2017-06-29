@@ -1,8 +1,8 @@
 # DbUpsert
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/db_upsert`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+upsert in postgresql and mysql
+PG: INSERT ... ON CONFLICT DO UPDATE
+Mysql: INSERT ... DUPLICATE KEY UPDATE
+This is my practice gem code, the code is simple and there are some else gem does better than this,such as **gem 'upsert'** and **gem 'activerecord-import'**
 
 ## Installation
 
@@ -21,14 +21,18 @@ Or install it yourself as:
     $ gem install db_upsert
 
 ## Usage
+```ruby
+fields = %w(name email city created_at updated_at)
+rows = [
+ ["smile", '2268571581@qq.com', 'shanghai', '2016-01-01', '2016-01-01'],
+ ['malzahar', 'm8023zsm@live.com', 'beijing', '2016-01-01', '2016-01-01'],
+]
+# mysql
+User.bulk_write_mysql(fields, rows, :conflict => [:name])
+# posrgresql
+User.bulk_write_pg(fields, rows, :conflict => [:name])
+```
 
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
